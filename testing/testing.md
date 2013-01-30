@@ -1,17 +1,18 @@
 **Based on materials by Katy Huff and Rachel Slaybaugh**
 
-**What is testing?**
+What is testing?
+----------------
  
 Software testing is a process by which one or more expected behaviors and results from a piece of software are exercised and confirmed. Well chosen tests will confirm expected code behavior for the extreme boundaries of the input domains, output ranges, parametric combinations, and other behavioral edge cases.
  
 
-**Why test?**
+Why test?
+---------
 
 Unless you write flawless, bug-free, perfectly accurate, fully precise, and predictable code every time, you must test your code in order to trust it enough to answer in the affirmative to at least a few of the following questions:
 
-Does your code work?
-
-Always?
+    Does your code work?
+    Always?
 
 Does it do what you think it does?
 
