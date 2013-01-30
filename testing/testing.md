@@ -11,20 +11,14 @@ Why test?
 
 Unless you write flawless, bug-free, perfectly accurate, fully precise, and predictable code every time, you must test your code in order to trust it enough to answer in the affirmative to at least a few of the following questions:
 
-    Does your code work?
-    Always?
-
-Does it do what you think it does?
-
-Does it continue to work after changes are made?
-
-Does it continue to work after system configurations or libraries are upgraded?
-
-Does it respond properly for a full range of input parameters?
-
-What about edge or corner cases?
-
-What’s the limit on that input parameter?
+* Does your code work?
+* Always?
+* Does it do what you think it does?
+* Does it continue to work after changes are made?
+* Does it continue to work after system configurations or libraries are upgraded?
+* Does it respond properly for a full range of input parameters?
+* What about edge or corner cases?
+* What’s the limit on that input parameter?
 
 
 **Verification**
@@ -36,85 +30,66 @@ Verification is the process of asking, “Have we built the software correctly?�
 Validation is the process of asking, “Have we built the right software?” That is, is the code designed in such a way as to produce the answers we’re interested in, data we want, etc.
 
 Where are tests ?
+-----------------
+
 Say we have an averaging function:
 
-::
 
-  def mean(numlist):
-     total = sum(numlist)
-     length = len(numlist)
-     return total/length
+    def mean(numlist):
+        total = sum(numlist)
+        length = len(numlist)
+        return total/length
 
 The test could be runtime exceptions in the function.
 
-::
-
-  def mean(numlist):
-     try :
-         total = sum(numlist)
-         length = len(numlist)
-     except ValueError :
-         print "The number list was not a list of numbers."
-     except :
-         print "There was a problem evaluating the number list."
-     return total/length
+    def mean(numlist):
+       try :
+           total = sum(numlist)
+           length = len(numlist)
+       except ValueError :
+           print "The number list was not a list of numbers."
+       except :
+           print "There was a problem evaluating the number list."
+       return total/length
 
 
 Sometimes they’re alongside the function definitions they’re testing.
 
-::
 
- def mean(numlist):
-    try :
-        total = sum(numlist)
-        length = len(numlist)
-    except ValueError :
-        print "The number list was not a list of numbers."
-    except :
-        print "There was a problem evaluating the number list."
-    return total/length
+    def mean(numlist):
+        try :
+            total = sum(numlist)
+            length = len(numlist)
+        except ValueError :
+            print "The number list was not a list of numbers."
+        except :
+            print "There was a problem evaluating the number list."
+        return total/length
  
- class TestClass:
-    def test_mean(self):
-        assert(mean([0,0,0,0])==0)
-        assert(mean([0,200])==100)
-        assert(mean([0,-200]) == -100)
-        assert(mean([0]) == 0)
-    def test_floating_mean(self):
-        assert(mean([1,2])==1.5)
+    class TestClass:
+        def test_mean(self):
+            assert(mean([0,0,0,0])==0)
+            assert(mean([0,200])==100)
+            assert(mean([0,-200]) == -100)
+            assert(mean([0]) == 0)
+        def test_floating_mean(self):
+            assert(mean([1,2])==1.5)
 
-Sometimes they’re in an executable independent of the main executable.
+Sometimes they’re in an executable independent of the main executable:
 
- 
-::
-
- def mean(numlist):
-    try :
-        total = sum(numlist)
-        length = len(numlist)
-    except ValueError :
-        print "The number list was not a list of numbers."
-    except :
-        print "There was a problem evaluating the number list."
-    return total/length
-
-Where, in a different file exists a test module:
+    import mean
+    class TestClass:
+        def test_mean(self):
+            assert(mean([0,0,0,0])==0)
+            assert(mean([0,200])==100)
+            assert(mean([0,-200]) == -100)
+            assert(mean([0]) == 0)
+        def test_floating_mean(self):
+            assert(mean([1,2])==1.5)
 
 
-::
-
-  import mean
-  class TestClass:
-      def test_mean(self):
-          assert(mean([0,0,0,0])==0)
-          assert(mean([0,200])==100)
-          assert(mean([0,-200]) == -100)
-          assert(mean([0]) == 0)
-      def test_floating_mean(self):
-          assert(mean([1,2])==1.5)
-
-
-**When should we test?**
+When should we test?
+---------------------
 
 The short answer is all the time. The long answer is that testing either before or after your software is written will improve your code, but testing after your program is used for something important is too late.
 
@@ -122,20 +97,29 @@ If we have a robust set of tests, we can run them before adding something new an
 
 Another important feature of testing is that it helps you remember what all the parts of your code do. If you are working on a large project over three years and you end up with 200 classes, it may be hard to remember what the widget class does in detail. If you have a test that checks all of the widget’s functionality, you can look at the test to remember what it’s supposed to do.
 
-**Who tests?**
+Who tests?
+----------
+
 In a collaborative coding environment, where many developers contribute to the same code, developers should be responsible individually for testing the functions they create and collectively for testing the code as a whole.
 
 Professionals invariably test their code, and take pride in test coverage, the percent of their functions that they feel confident are comprehensively tested.
 
-**How does one test?**
+How does one test?
+------------------
 
 The type of tests you’ll write is determined by the testing framework you adopt.
 
-**Types of Tests:**
-*Exceptions*
+Types of Tests:
+---------------
+**Exceptions**
+
 Exceptions can be thought of as type of runttime test. They alert the user to exceptional behavior in the code. Often, exceptions are related to functions that depend on input that is unknown at compile time. Checks that occur within the code to handle exceptional behavior that results from this type of input are called Exceptions.
 
-*Unit Tests*
+**Assertions**
+
+Assertions can verify that the expectations of a function are met, for instance, that the input types are correct or that an input is non-zero.
+
+**Unit Tests**
 
 Unit tests are a type of test which test the fundametal units a program’s functionality. Often, this is on the class or function level of detail.
 
@@ -143,22 +127,22 @@ To test functions and classes, we want to test the interfaces, rather than the i
 
 In the case of our fix_missing function, we need to test the expected behavior by providing lines and files that do and do not have missing entries. We should also test the behavior for empty lines and files as well. These are boundary cases.
 
-*System Tests*
-
-System level tests are intended to test the code as a whole. As opposed to unit tests, system tests ask for the behavior as a whole. This sort of testing involves comparison with other validated codes, analytical solutions, etc.
-
-*Regression Tests*
-
-A regression test ensures that new code does change anything. If you change the default answer, for example, or add a new question, you’ll need to make sure that missing entries are still found and fixed.
-
-*Integration Tests*
+**Integration Tests**
 
 Integration tests query the ability of the code to integrate well with the system configuration and third party libraries and modules. This type of test is essential for codes that depend on libraries which might be updated independently of your code or when your code might be used by a number of users who may have various versions of libraries.
 
-**Test Suites**
-Putting a series of unit tests into a suite creates, as you might imagine, a test suite.
 
-**Elements of a Test**
+**System Tests**
+
+System level tests are intended to test the code as a whole. As opposed to unit tests, system tests ask for the behavior as a whole. This sort of testing involves comparison with other validated codes, analytical solutions, etc.
+
+**Regression Tests**
+
+A regression test ensures that new code does change anything. If you change the default answer, for example, or add a new question, you’ll need to make sure that missing entries are still found and fixed.
+
+
+Elements of a Test
+------------------
 
 **Behavior**
 
@@ -185,32 +169,30 @@ For example, since fun varies a lot between people, the fun() function is a memb
 Creating fixtures is often done in a call to a setup function. Deleting them and other cleanup is done in a teardown function.
 
 **The Big Picture**
+
 Putting all this together, the testing algorithm is often:
 
-::
-
-  setUp
-  test
-  tearDown
+    setUp
+    test
+    tearDown
 
 
 But, sometimes it’s the case that your tests change the fixtures. If so, it’s better for the setup and teardown functions to occur on either side of each test. In that case, the testing algorithm should be:
 
-::
 
-  setUp
-  test1
-  tearDown
-  setUp
-  test2
-  tearDown
-  setUp
-  test3
-  tearDown
+    setUp
+    test1
+    tearDown
+    setUp
+    test2
+    tearDown
+    setUp
+    test3
+    tearDown
 
-----------------------------------------------------------
+
 Python Nose
----------------------------------------------------------- 
+-----------
 
 The testing framework we’ll discuss today is called nose, and comes packaged with the enthought python distribution that you’ve installed.
 
