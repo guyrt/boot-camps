@@ -191,8 +191,8 @@ But, sometimes it’s the case that your tests change the fixtures. If so, it’
     tearDown
 
 
-Python Nose
------------
+Python Nose (the simple way)
+----------------------------
 
 The testing framework we’ll discuss today is called nose, and it is used a many professional and academic python packages.
 
@@ -200,21 +200,43 @@ Nose tests are files that begin with Test-, Test_, test-, or test_. Specifically
 
 To write a nose test, we make assertions.
 
-::
-
     assert (ShouldBeTrue())
     assert (not ShouldNotBeTrue())
 
 
-In addition to assertions, in many test frameworks, there are expectations, etc.
+In addition to assertions, in many test frameworks, there are expectations, etc. We'll see these in a second.
 
-**Add a test to our work**
-
-There are a few tests for the mean function that we listed in this lesson. What are some tests that should fail? Add at least three test cases to this set.
+***Exercise: There are a few tests for the mean function that we listed in this lesson. What are some tests that should fail? Add at least three test cases to this set.***
 
 *Hint: think about what form your input could take and what you should do to handle it. Also, think about the type of the elements in the list. What should be done if you pass a list of integers? What if you pass a list of strings?*
 
-**Test Driven Development**
+Python unittest2
+----------------
+
+More comprehensive tests make use of the unittest2 module. Tests inherit from the TestCase base class, which has functions to test several behaviors:
+
+    from unittest2 import TestCase
+    class SomeSimpleListTests(TestCase):
+    
+        def setUp(self):
+            self.list = [1,2,3,4]
+            
+        def test_list_length(self):
+            self.assertEqual(4, len(self.list))
+            
+        def test_random_access(self):
+            self.assertEqual(2, self.list[1])
+            
+        def test_contains(self):
+            self.assertIn(3, self.list)
+            
+        def test_range(self):
+            self.assertRaises(self.list, __get_item__, 5)
+            
+See (http://docs.python.org/2/library/unittest.html#assert-methods) for a list of all the assertions supported by unittest.
+
+Test Driven Development
+-----------------------
 
 Some people develop code by writing the tests first.
 
@@ -225,83 +247,80 @@ An example
 --------------------------------------------------------------------
 The overlap method takes two rectangles (red and blue) and computes the degree of overlap between them. Save it in overlap.py. A rectangle is defined as a tuple of tuples: ((x_lo,y_lo),(x_hi),(y_hi))
 
-::
 
- def overlap(red, blue):
-    '''Return overlap between two rectangles, or None.'''
 
-    ((red_lo_x, red_lo_y), (red_hi_x, red_hi_y)) = red
-    ((blue_lo_x, blue_lo_y), (blue_hi_x, blue_hi_y)) = blue
+    def overlap(red, blue):
+        '''Return overlap between two rectangles, or None.'''
 
-    if (red_lo_x >= blue_hi_x) or \
-       (red_hi_x <= blue_lo_x) or \
-       (red_lo_y >= blue_hi_x) or \
-       (red_hi_y <= blue_lo_y):
-        return None
+        ((red_lo_x, red_lo_y), (red_hi_x, red_hi_y)) = red
+        ((blue_lo_x, blue_lo_y), (blue_hi_x, blue_hi_y)) = blue
 
-    lo_x = max(red_lo_x, blue_lo_x)
-    lo_y = max(red_lo_y, blue_lo_y)
-    hi_x = min(red_hi_x, blue_hi_x)
-    hi_y = min(red_hi_y, blue_hi_y)
-    return ((lo_x, lo_y), (hi_x, hi_y))
+        if (red_lo_x >= blue_hi_x) or \
+           (red_hi_x <= blue_lo_x) or \
+           (red_lo_y >= blue_hi_x) or \
+           (red_hi_y <= blue_lo_y):
+            return None
+
+        lo_x = max(red_lo_x, blue_lo_x)
+        lo_y = max(red_lo_y, blue_lo_y)
+        hi_x = min(red_hi_x, blue_hi_x)
+        hi_y = min(red_hi_y, blue_hi_y)
+        return ((lo_x, lo_y), (hi_x, hi_y))
 
 
 Now let's create a set of tests for this class. Before we do this, let's think about *how* we might test this method. How should it work?
 
 
-::
 
- from overlap import overlap
+    from overlap import overlap
 
- def test_empty_with_empty():
-    rect = ((0, 0), (0, 0))
-    assert overlap(rect, rect) == None
+    def test_empty_with_empty():
+        rect = ((0, 0), (0, 0))
+        assert overlap(rect, rect) == None
 
- def test_empty_with_unit():
-    empty = ((0, 0), (0, 0))
-    unit = ((0, 0), (1, 1))
-    assert overlap(empty, unit) == None
+    def test_empty_with_unit():
+        empty = ((0, 0), (0, 0))
+        unit = ((0, 0), (1, 1))
+        assert overlap(empty, unit) == None
 
- def test_unit_with_unit():
-    unit = ((0, 0), (1, 1))
-    assert overlap(unit, unit) == unit
+    def test_unit_with_unit():
+        unit = ((0, 0), (1, 1))
+        assert overlap(unit, unit) == unit
 
- def test_partial_overlap():
-    red = ((0, 3), (2, 5))
-    blue = ((1, 0), (2, 4))
-    assert overlap(red, blue) == ((1, 3), (2, 4))
+    def test_partial_overlap():
+        red = ((0, 3), (2, 5))
+        blue = ((1, 0), (2, 4))
+        assert overlap(red, blue) == ((1, 3), (2, 4))
 
 
 Run your tests.
 
-::
 
- [rguy@infolab-33 ~/TestExample]$ nosetests
- ...F
- ======================================================================
- FAIL: test_overlap.test_partial_overlap
- ----------------------------------------------------------------------
- Traceback (most recent call last):
-   File "/usr/lib/python2.6/site-packages/nose/case.py", line 183, in runTest
-     self.test(*self.arg)
-   File "/afs/ictp.it/home/r/rguy/TestExample/test_overlap.py", line 19, in test_partial_overlap
-     assert overlap(red, blue) == ((1, 3), (2, 4))
- AssertionError
+    [guyrt ~/TestExample]$ nosetests
+     ...F
+     ======================================================================
+     FAIL: test_overlap.test_partial_overlap
+     ----------------------------------------------------------------------
+     Traceback (most recent call last):
+       File "/usr/lib/python2.6/site-packages/nose/case.py", line 183, in runTest
+         self.test(*self.arg)
+       File "/afs/ictp.it/home/r/rguy/TestExample/test_overlap.py", line 19, in test_partial_overlap
+         assert overlap(red, blue) == ((1, 3), (2, 4))
+     AssertionError
 
- ----------------------------------------------------------------------
- Ran 4 tests in 0.005s
+     ----------------------------------------------------------------------
+     Ran 4 tests in 0.005s
 
- FAILED (failures=1)
+     FAILED (failures=1)
 
 
 Oh no! Something failed. The failure was on line in this test:
 
-::
 
- def test_partial_overlap():
-   red = ((0, 3), (2, 5))
-   blue = ((1, 0), (2, 4))
-   assert overlap(red, blue) == ((1, 3), (2, 4))
+    def test_partial_overlap():
+       red = ((0, 3), (2, 5))
+       blue = ((1, 0), (2, 4))
+       assert overlap(red, blue) == ((1, 3), (2, 4))
 
 
 Can you spot why it failed? Try to fix the method so all tests pass.
