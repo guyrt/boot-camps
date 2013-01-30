@@ -339,8 +339,32 @@ type of treatment, we could do something like
 
 
 
-Creating tables
+Creating and editing tables
 ---------------
+
+Creating a table specifies the columns, column names, and data types. 
+In sqlite, the easiest way to see how to create a table is to use the special schema command to view the create command for existing tables:
+
+    sqlite> .schema
+    CREATE TABLE "plots" ("plot_id" INTEGER, "plot_type" VARCHAR);
+    CREATE TABLE "species" ("species_id" VARCHAR, "genus" VARCHAR, "species" VARCHAR, "taxa" VARCHAR);
+    CREATE TABLE "surveys" ("record_id" INTEGER, "month" INTEGER, "day" INTEGER, "year" INTEGER, "plot" INTEGER, "species" VARCHAR, "sex" VARCHAR, "wgt" INTEGER);
+
+***Exercise: create another table to record researchers who were responsible for surveys. What fields should this table have? What types should they be?***
+
+Sometimes, it is necessary to alter a table's schema. We can do two alterations in sqlite3: 
+rename an existing column or add a new column. See the sqlite documentation for an example of 
+renaming a column ('http://www.sqlite.org/lang_altertable.html'). Adding a column looks like this:
+
+    ALTER TABLE <table_name> ADD COLUMN <name> <type>; 
+
+
+***Exercise: Alter the surveys table with a column "researcher_id" of INTEGER type. This should take values from the id column in your researchers table.***
 
 Adding data to existing tables
 ------------------------------
+
+Use the insert command to insert data into an existing table:
+
+    INSERT INTO researcher (id, first_name, last_name) values (23489203, 'Richard', 'Guy');  
+
