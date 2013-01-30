@@ -194,13 +194,10 @@ But, sometimes it’s the case that your tests change the fixtures. If so, it’
 Python Nose
 -----------
 
-The testing framework we’ll discuss today is called nose, and comes packaged with the enthought python distribution that you’ve installed.
-
-**Where is a nose test?**
+The testing framework we’ll discuss today is called nose, and it is used a many professional and academic python packages.
 
 Nose tests are files that begin with Test-, Test_, test-, or test_. Specifically, these satisfy the testMatch regular expression [Tt]est[-_]. (You can also teach nose to find tests by declaring them in the unittest.TestCase subclasses chat you create in your code. You can also create test functions which are not unittest.TestCase subclasses if they are named with the configured testMatch regular expression.)
 
-Nose Test Syntax
 To write a nose test, we make assertions.
 
 ::
