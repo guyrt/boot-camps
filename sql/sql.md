@@ -354,7 +354,7 @@ In sqlite, the easiest way to see how to create a table is to use the special sc
 
 Sometimes, it is necessary to alter a table's schema. We can do two alterations in sqlite3: 
 rename an existing column or add a new column. See the sqlite documentation for an example of 
-renaming a column ('http://www.sqlite.org/lang_altertable.html'). Adding a column looks like this:
+renaming a column (http://www.sqlite.org/lang_altertable.html). Adding a column looks like this:
 
     ALTER TABLE <table_name> ADD COLUMN <name> <type>; 
 
