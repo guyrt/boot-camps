@@ -19,6 +19,14 @@ Getting setup
 3. Download the [Portal Database](https://github.com/swcarpentry/2012-11-UNC/raw/master/SQL/portal_mammals.sqlite)
 4. Open SQLite Manage **Tools -> SQLite Manager**
 
+***OR***
+
+In the shell, type
+  
+    > sqlite3
+    
+This will open a command line view of sqlite.
+
 The data
 --------
 
