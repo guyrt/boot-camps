@@ -210,12 +210,12 @@ In addition to assertions, in many test frameworks, there are expectations, etc.
 
 *Hint: think about what form your input could take and what you should do to handle it. Also, think about the type of the elements in the list. What should be done if you pass a list of integers? What if you pass a list of strings?*
 
-Python unittest2
-----------------
+Python unittest
+---------------
 
 More comprehensive tests make use of the unittest2 module. Tests inherit from the TestCase base class, which has functions to test several behaviors:
 
-    from unittest2 import TestCase
+    from unittest import TestCase
     class SomeSimpleListTests(TestCase):
     
         def setUp(self):
