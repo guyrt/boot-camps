@@ -269,7 +269,7 @@ ordered by the count
     SELECT species, COUNT(*)
     FROM surveys
     GROUP BY species
-    ORDER BY COUNT(sp_code)
+    ORDER BY COUNT(species)
 
 ***Exercise: Write a query that lets us look at which years contained the most individuals and which had the least?***
 
